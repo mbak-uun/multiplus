@@ -5208,7 +5208,7 @@ $(document).on('click', '#histClearAll', async function(){
         const cexList = CONFIG_UI?.CEXES || [];
         cexList.forEach(cex => {
             const cexKey = cex.key;
-            const cexLabel = cex.label || cexKey;
+            const cexLabel = (cex.label || cexKey).toUpperCase();
             const cexColor = CONFIG_CEX?.[cexKey]?.WARNA || '#666';
             $cexContainer.append(`
                 <div class="uk-margin-small-bottom">
@@ -5228,7 +5228,7 @@ $(document).on('click', '#histClearAll', async function(){
         dexList.forEach(dexKey => {
             const dexConfig = CONFIG_DEXS?.[dexKey] || {};
             const dexUiConfig = CONFIG_UI?.DEXES?.find(d => d.key === dexKey) || {};
-            const dexLabel = dexConfig.label || dexUiConfig.label || String(dexKey).toUpperCase();
+            const dexLabel = (dexConfig.label || dexUiConfig.label || String(dexKey)).toUpperCase();
             const dexColor = dexConfig.warna || '#666';
 
             $dexContainer.append(`
@@ -5281,13 +5281,6 @@ $(document).on('click', '#histClearAll', async function(){
 
     // ========== PROFILE MODAL MANAGEMENT ==========
     const PROFILE_STORAGE_KEY = 'MODAL_PROFILES';
-
-    // Range presets definition
-    const RANGE_PRESETS = {
-        kecil: { min: 50, max: 100 },
-        sedang: { min: 200, max: 500 },
-        besar: { min: 1000, max: 2000 }
-    };
 
     // Load profiles from localStorage
     function loadProfiles() {
@@ -5356,28 +5349,6 @@ $(document).on('click', '#histClearAll', async function(){
             if (typeof toast !== 'undefined' && toast.info) {
                 toast.info(`Profil "${profile.name}" diterapkan`);
             }
-        }
-    });
-
-    // Handle preset range buttons
-    $(document).on('click', '.profile-preset', function() {
-        const rangeName = $(this).data('range');
-        const preset = RANGE_PRESETS[rangeName];
-        if (!preset) return;
-
-        const { min, max } = preset;
-        // Apply random values within range to all DEX inputs
-        $('.bulk-dex-left').each(function() {
-            const value = Math.floor(Math.random() * (max - min + 1)) + min;
-            $(this).val(value);
-        });
-        $('.bulk-dex-right').each(function() {
-            const value = Math.floor(Math.random() * (max - min + 1)) + min;
-            $(this).val(value);
-        });
-
-        if (typeof toast !== 'undefined' && toast.success) {
-            toast.success(`Preset "${rangeName.toUpperCase()}" diterapkan (${min}-${max})`);
         }
     });
 
