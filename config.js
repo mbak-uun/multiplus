@@ -783,7 +783,7 @@ const CONFIG_DEXS = {
         },
         allowFallback: false // DFlow is a Solana DEX aggregator
     },
-
+/*
     fly: {
         label: 'FLY',
         badgeClass: 'bg-fly',
@@ -802,8 +802,7 @@ const CONFIG_DEXS = {
         },
         allowFallback: false
     }
-
-
+*/
 };
 
 try {
